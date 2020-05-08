@@ -1,19 +1,37 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Install dependencies
-case $(uname -s) in
-    Linux*)
-        ;;
-    Darwin*)
-        CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-        brew bundle --file homebrew/.Brewfile
-        ;;
-    *)
-esac
+function install_homebrew() {
+    if [ ! "$(uname)" == "Darwin" ]; then
+        return
+    fi
+    CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    stow homebrew
+    brew bundle --global
+}
 
-# Stow configs
-for dir in */
-do
-    stow ${dir%*/}
-done
+function install_vscode() {
+    case $(uname -s) in
+        Linux*)
+            target="$HOME/.config/Code/User"
+            ;;
+        Darwin*)
+            stow vscode --target "$HOME/Library/Application Support/Code/User"
+            ;;
+        *)
+    esac
+
+    code --install-extension github.github-vscode-theme
+    code --install-extension editorconfig.editorconfig
+    code --install-extension hiro-sun.vscode-emacs
+}
+
+# install_homebrew
+install_vscode
+
+stow bash
+stow editorconfig
+stow emacs
+stow git
+stow shell
+stow zsh
