@@ -6,8 +6,8 @@ case $(uname -s) in
     Linux*)
         ;;
     Darwin*)
-        # CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-        # brew bundle --file homebrew/.Brewfile
+        CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+        brew bundle --file homebrew/.Brewfile
         ;;
     *)
 esac
