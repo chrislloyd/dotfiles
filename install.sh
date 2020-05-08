@@ -22,6 +22,7 @@ function install_vscode() {
     esac
 
     code --install-extension github.github-vscode-theme
+		code --install-extension github.vscode-pull-request-github
     code --install-extension editorconfig.editorconfig
     code --install-extension lfs.vscode-emacs-friendly
     code --install-extension ms-vscode-remote.vscode-remote-extensionpack
