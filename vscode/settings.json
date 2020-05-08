@@ -13,5 +13,6 @@
   "terminal.integrated.fontSize": 16,
   "window.autoDetectColorScheme": true,
   "workbench.preferredDarkColorTheme": "GitHub Dark",
-  "workbench.preferredLightColorTheme": "GitHub Light"
+  "workbench.preferredLightColorTheme": "GitHub Light",
+  "workbench.colorTheme": "GitHub Dark"
 }

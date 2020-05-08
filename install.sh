@@ -6,8 +6,8 @@ function install_homebrew() {
         return
     fi
     CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    brew bundle --file homebrew/.Brewfile
     stow homebrew
-    brew bundle --global
 }
 
 function install_vscode() {
@@ -26,7 +26,7 @@ function install_vscode() {
     code --install-extension hiro-sun.vscode-emacs
 }
 
-# install_homebrew
+install_homebrew
 install_vscode
 
 stow bash
