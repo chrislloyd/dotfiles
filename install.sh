@@ -23,7 +23,7 @@ function install_vscode() {
 
     code --install-extension github.github-vscode-theme
     code --install-extension editorconfig.editorconfig
-    code --install-extension hiro-sun.vscode-emacs
+    code --install-extension lfs.vscode-emacs-friendly
 }
 
 install_homebrew
