@@ -1,0 +1,43 @@
+[user]
+	useConfigOnly = true
+
+[alias]
+	b = branch
+	branchs = branch -a
+	co = checkout
+	ll = log --pretty=oneline --abbrev-commit --max-count=15
+	remotes = remote -v
+	s = status -sb -uno --ignore-submodules=untracked
+	st = status
+	staged = diff --staged
+	tags = tag -l
+	uncommit = reset --soft HEAD^
+	unstage = reset
+
+[core]
+	filemode = true
+	logallrefupdates = true
+	whitespace = space-before-tab, trailing-space
+	excludesfile = ~/.gitignore
+
+[credential]
+	helper = osxkeychain
+
+[push]
+	default = current
+
+[color]
+	ui = true
+
+[pull]
+	rebase = true
+
+[commit]
+	template = ~/.gitmessage
+  	gpgsign = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
