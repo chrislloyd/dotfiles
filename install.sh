@@ -24,6 +24,7 @@ function install_vscode() {
     code --install-extension github.github-vscode-theme
     code --install-extension editorconfig.editorconfig
     code --install-extension lfs.vscode-emacs-friendly
+    code --install-extension ms-vscode-remote.vscode-remote-extensionpack
 }
 
 install_homebrew
