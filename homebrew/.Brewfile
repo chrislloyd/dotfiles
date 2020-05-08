@@ -11,6 +11,7 @@ tap 'railwaycat/emacsmacport'
 brew 'aspell'
 brew 'emacs-mac'
 cask 'karabiner-elements'
+brew 'stow'
 
 brew 'git'
 cask 'gpg-suite'
