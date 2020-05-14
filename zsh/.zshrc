@@ -35,3 +35,6 @@ fi
 if type brew &>/dev/null; then
   FPATH=$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH
 fi
+
+# Prompt
+PS1='%(?.%F{240}.%F{red})%B%2~%b %# '
