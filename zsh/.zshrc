@@ -1,23 +1,24 @@
-[[ -e ~/.profile ]] && source ~/.profile
+# zsh opts.
+# http://zsh.sourceforge.net/Doc/Release/Options.html
 
+setopt APPEND_HISTORY
+setopt AUTOCD
+setopt CORRECT
 setopt EXTENDED_GLOB
+setopt EXTENDED_HISTORY
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_IGNORE_DUPS
+setopt INC_APPEND_HISTORY
 setopt interactive_comments
 setopt MAILWARN
 setopt PROMPT_SUBST
-setopt AUTOCD
-setopt CORRECT
-
-# History
-
-setopt EXTENDED_HISTORY
 setopt SHARE_HISTORY
-setopt APPEND_HISTORY
-setopt INC_APPEND_HISTORY
-setopt HIST_EXPIRE_DUPS_FIRST
-setopt HIST_IGNORE_DUPS
 
 SAVEHIST=5000
 HISTSIZE=2000
+
+# Load standard shell profile
+[[ -e "${HOME}/.profile" ]] && source "${HOME}/.profile"
 
 # Zgen
 # https://github.com/tarjoilija/zgen
