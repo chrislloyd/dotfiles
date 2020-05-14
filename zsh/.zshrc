@@ -1,3 +1,5 @@
+[[ -e ~/.profile ]] && source ~/.profile
+
 setopt EXTENDED_GLOB
 setopt interactive_comments
 setopt MAILWARN
@@ -17,20 +19,18 @@ setopt HIST_IGNORE_DUPS
 SAVEHIST=5000
 HISTSIZE=2000
 
+# Zgen
+# https://github.com/tarjoilija/zgen
+
 source "${HOME}/.zgen/zgen.zsh"
-
-# if the init script doesn't exist
 if ! zgen saved; then
-
-  # specify plugins here
-  zgen load lukechilds/zsh-nvm
-  zgen load zsh-users/zsh-syntax-highlighting
-
-  # generate the init script from plugins above
-  zgen save
+	zgen load lukechilds/zsh-nvm
+	zgen load zsh-users/zsh-syntax-highlighting
+	zgen save
 fi
 
-[[ -e ~/.profile ]] && source ~/.profile
+# Homebrew
+# https://brew.sh/
 
 if type brew &>/dev/null; then
   FPATH=$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH

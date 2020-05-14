@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+function install_zgen() {
+	if [! -d "${HOME}/.zgen" ]
+	then
+		git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
+	fi
+}
+
 function install_homebrew() {
     if [ ! "$(uname)" == "Darwin" ]; then
         return
@@ -28,6 +35,7 @@ function install_vscode() {
     code --install-extension ms-vscode-remote.vscode-remote-extensionpack
 }
 
+install_zgen
 install_homebrew
 install_vscode
 
