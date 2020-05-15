@@ -2,9 +2,6 @@
 
 export EDITOR="code"
 
-PATH=/usr/local/bin:$PATH
-PATH=$PATH:/usr/local/sbin
-
 function s () { cd "$HOME/src/$1"; }
 function d () { cd "$HOME/Desktop/$1"; }
 
