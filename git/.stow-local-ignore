@@ -1,0 +1,3 @@
+# Stow comes with a built-in set of files to ignore. While this is mostly convenient, in the case of git we don't want stow to ignore linking .gitignore files. This file is intentionally empty. Read more at
+#   
+#   https://www.gnu.org/software/stow/manual/html_node/Ignore-Lists.html#Ignore-Lists

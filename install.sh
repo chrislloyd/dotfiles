@@ -39,9 +39,4 @@ install_zgen
 install_homebrew
 install_vscode
 
-stow bash
-stow editorconfig
-stow emacs
-stow git
-stow shell
-stow zsh
+stow --verbose --restow bash editorconfig emacs git shell zsh

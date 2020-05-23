@@ -1,4 +1,6 @@
 [user]
+	name = Chris Lloyd
+  email = christopher.lloyd@gmail.com
 	useConfigOnly = true
 
 [alias]
@@ -19,6 +21,7 @@
 	logallrefupdates = true
 	whitespace = space-before-tab, trailing-space
 	excludesfile = ~/.gitignore
+	editor = code --wait
 
 [credential]
 	helper = osxkeychain
