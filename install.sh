@@ -63,7 +63,6 @@ function install_vscode() {
 }
 
 install_zgen
-install_xcode
 install_homebrew
 install_vscode
 
