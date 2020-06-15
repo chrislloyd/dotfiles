@@ -1,4 +1,5 @@
 {
+  "dotfiles.repository": "https://github.com/chrislloyd/dotfiles.git",
   "editor.fontFamily": "PragmataPro Liga, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 16,
