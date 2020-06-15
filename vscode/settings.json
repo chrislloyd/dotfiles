@@ -1,17 +1,17 @@
 {
-  "editor.fontFamily": "PragmataPro Mono Liga, Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontFamily": "PragmataPro Liga, Menlo, Monaco, 'Courier New', monospace",
   "editor.fontLigatures": true,
   "editor.fontSize": 16,
   "editor.formatOnSave": true,
   "editor.wordWrap": "wordWrapColumn",
   "explorer.autoReveal": false,
   "explorer.confirmDragAndDrop": false,
+  "git.autofetch": true,
   "git.enableCommitSigning": true,
   "telemetry.enableTelemetry": false,
   "terminal.integrated.fontSize": 16,
   "window.autoDetectColorScheme": true,
   "workbench.colorTheme": "GitHub Dark",
   "workbench.preferredDarkColorTheme": "GitHub Dark",
-  "workbench.preferredLightColorTheme": "GitHub Light",
-  "workbench.colorTheme": "GitHub Dark"
+  "workbench.preferredLightColorTheme": "GitHub Light"
 }
