@@ -27,6 +27,7 @@ source "${HOME}/.zgen/zgen.zsh"
 if ! zgen saved; then
 	zgen load lukechilds/zsh-nvm
 	zgen load zsh-users/zsh-syntax-highlighting
+  zgen load unixorn/autoupdate-zgen
 	zgen save
 fi
 
@@ -38,4 +39,4 @@ if type brew &>/dev/null; then
 fi
 
 # Prompt
-PS1='%(?.%F{240}.%F{red})%B%2~%b %# '
+PS1='%F{240}%2~%f %(?.%F{240}.%F{red})%#%f '
