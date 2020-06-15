@@ -2,7 +2,7 @@
 set -euo pipefail
 
 function install_zgen() {
-	if [-d "${HOME}/.zgen" ]; then
+	if [ -d "${HOME}/.zgen" ]; then
     return
 	fi
 
@@ -11,6 +11,10 @@ function install_zgen() {
 
 function install_xcode() {
   if [ ! "$(uname)" == "Darwin" ]; then
+    return
+  fi
+
+  if [ $(xcode-select -p 1>/dev/null;echo $?) ]; then
     return
   fi
 
