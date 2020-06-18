@@ -1,8 +1,13 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+function skip() {
+  echo "Skipping:" $@
+}
+
 function install_zgen() {
 	if [ -d "${HOME}/.zgen" ]; then
+    skip "zgen"
     return
 	fi
 
@@ -10,11 +15,8 @@ function install_zgen() {
 }
 
 function install_xcode() {
-  if [ ! "$(uname)" == "Darwin" ]; then
-    return
-  fi
-
-  if [ $(xcode-select -p 1>/dev/null;echo $?) ]; then
+  if [ ! "$(uname)" == "Darwin" ] || [ $(xcode-select -p 1>/dev/null;echo $?) ]; then
+    skip "XCode"
     return
   fi
 
@@ -23,6 +25,7 @@ function install_xcode() {
 
 function install_homebrew() {
   if [ ! "$(uname)" == "Darwin" ]; then
+    skip "Homebrew"
     return
   fi
 
@@ -37,11 +40,21 @@ function install_vscode() {
       target="$HOME/.config/Code/User"
       ;;
     Darwin*)
-      stow vscode --target "$HOME/Library/Application Support/Code/User"
+      target="$HOME/Library/Application Support/Code/User"
       ;;
     *)
+      return
+      ;;
   esac
 
+  mkdir -p "$target"
+  stow vscode --target "$target"
+
+  if [ "$TERM_PROGRAM" == "vscode" ]; then
+    skip "VSCode extensions"
+    return
+  fi
+  
   code --install-extension github.github-vscode-theme
   code --install-extension github.vscode-pull-request-github
   code --install-extension editorconfig.editorconfig
