@@ -1,6 +1,6 @@
 # -- Personal
 
-export EDITOR="code"
+export EDITOR="code -w"
 PATH=/usr/local/sbin:$PATH
 
 function s () { cd "$HOME/src/$1"; }
