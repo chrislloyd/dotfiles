@@ -1,6 +1,6 @@
 # -- Personal
 
-export EDITOR="code"
+export EDITOR="code -w"
 PATH=/usr/local/sbin:$PATH
 
 function s () { cd "$HOME/src/$1"; }
@@ -9,6 +9,16 @@ function d () { cd "$HOME/Desktop/$1"; }
 alias ..="cd .."
 alias ...="cd ../.."
 
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/bin" ] ; then
+    PATH="$HOME/bin:$PATH"
+fi
+
+# set PATH so it includes user's private bin if it exists
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 
 # -- Tools
 
@@ -16,9 +26,6 @@ alias ...="cd ../.."
 export GOPATH=$HOME
 PATH=$PATH:$GOPATH/bin
 PATH=$PATH:/usr/local/opt/go/libexec/bin
-
-# Haskell
-PATH=$PATH:$HOME/.local/bin
 
 # Javascript
 export NVM_LAZY_LOAD=true
