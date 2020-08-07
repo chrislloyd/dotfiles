@@ -66,7 +66,7 @@ function vscode() {
 function gnu-stow() {
   case $(uname -s) in
     Linux*)
-      apt install stow
+      sudo apt install stow
       ;;
     Darwin*)
       if ! command -v stow > /dev/null; then
