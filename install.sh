@@ -21,7 +21,7 @@ function zgen() {
 }
 
 function xcode() {
-  if [ ! "$(uname)" == "Darwin" ] || [ $(xcode-select -p 1>/dev/null;echo $?) ]; then
+  if [ "$(uname)" != "Darwin" ] || [ $(xcode-select -p 1>/dev/null;echo $?) ]; then
     skip
     return
   fi
@@ -30,7 +30,7 @@ function xcode() {
 }
 
 function homebrew() {
-  if [ ! "$(uname)" == "Darwin" ]; then
+  if [ "$(uname)" != "Darwin" ]; then
     skip
     return
   fi
@@ -43,7 +43,7 @@ function homebrew() {
 }
 
 function vscode() {
-  if [ ! "$(uname)" == "Darwin" ]; then
+  if [ "$(uname)" != "Darwin" ]; then
     return
   fi
 
@@ -53,7 +53,7 @@ function vscode() {
 
   mkdir -p "$HOME/Library/Application Support/Code/User"
 
-  if [ "$TERM_PROGRAM" == "vscode" ]; then
+  if [ "$TERM_PROGRAM" = "vscode" ]; then
     skip
   fi
 
@@ -61,12 +61,6 @@ function vscode() {
   code --install-extension github.vscode-pull-request-github
   code --install-extension lfs.vscode-emacs-friendly
   code --install-extension ms-vscode-remote.vscode-remote-extensionpack
-}
-
-function apt() {
-  if [ ! "$(uname)" == "Linux" ]; then
-    return
-  fi
 }
 
 function gnu-stow() {
@@ -89,7 +83,6 @@ function gnu-stow() {
 # Install dependencies
 install "zgen" zgen
 install "XCode" xcode
-install "apt" apt
 install "homebrew" homebrew
 install "VSCode" vscode
 install "stow" gnu-stow
