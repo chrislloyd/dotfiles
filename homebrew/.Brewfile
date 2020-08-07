@@ -25,7 +25,7 @@ brew 'jsonpp'
 brew 'jq'
 
 brew 'nvm'
-brew 'yarn', args: ['without-node']
+brew 'yarn'
 
 brew 'sqlite'
 

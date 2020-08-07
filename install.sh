@@ -1,70 +1,95 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-function skip() {
-  echo "Skipping:" $@
+function install() {
+  echo "Installing $1..."
+  ($2)
 }
 
-function install_zgen() {
+
+function skip() {
+  echo "Skipping"
+}
+
+function zgen() {
 	if [ -d "${HOME}/.zgen" ]; then
-    skip "zgen"
+    skip
     return
 	fi
 
   git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 }
 
-function install_xcode() {
+function xcode() {
   if [ ! "$(uname)" == "Darwin" ] || [ $(xcode-select -p 1>/dev/null;echo $?) ]; then
-    skip "XCode"
+    skip
     return
   fi
 
   sudo xcode-select --install
 }
 
-function install_homebrew() {
+function homebrew() {
   if [ ! "$(uname)" == "Darwin" ]; then
-    skip "Homebrew"
+    skip
     return
   fi
 
-  CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  if ! command -v brew > /dev/null; then
+    CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  fi
+
   brew bundle --file homebrew/.Brewfile
-  stow homebrew
 }
 
-function install_vscode() {
-  case $(uname -s) in
-    Linux*)
-      target="$HOME/.config/Code/User"
-      ;;
-    Darwin*)
-      target="$HOME/Library/Application Support/Code/User"
-      ;;
-    *)
-      return
-      ;;
-  esac
-
-  mkdir -p "$target"
-  stow vscode --target "$target"
-
-  if [ "$TERM_PROGRAM" == "vscode" ]; then
-    skip "VSCode extensions"
+function vscode() {
+  if [ ! "$(uname)" == "Darwin" ]; then
     return
   fi
-  
+
+  if [ ! -e "/Applications/Visual Studio Code.app" ]; then
+    brew cask install visual-studio-code
+  fi
+
+  mkdir -p "$HOME/Library/Application Support/Code/User"
+
+  if [ "$TERM_PROGRAM" == "vscode" ]; then
+    skip
+  fi
+
   code --install-extension github.github-vscode-theme
   code --install-extension github.vscode-pull-request-github
-  code --install-extension editorconfig.editorconfig
   code --install-extension lfs.vscode-emacs-friendly
   code --install-extension ms-vscode-remote.vscode-remote-extensionpack
 }
 
-install_zgen
-install_xcode
-install_homebrew
-install_vscode
+function apt() {
+  if [ ! "$(uname)" == "Linux" ]; then
+    return
+  fi
+}
 
-stow --verbose --restow bash editorconfig emacs git shell zsh
+function gnu-stow() {
+  case $(uname -s) in
+    Linux*)
+      apt install stow
+      ;;
+    Darwin*)
+      if ! command -v stow > /dev/null; then
+        brew install stow
+      fi
+
+      stow --verbose --restow vscode --target "$HOME/Library/Application Support/Code/User"
+      ;;
+  esac
+
+  stow --verbose --restow bash editorconfig emacs git shell zsh
+}
+
+# Install dependencies
+install "zgen" zgen
+install "XCode" xcode
+install "apt" apt
+install "homebrew" homebrew
+install "VSCode" vscode
+install "stow" gnu-stow
