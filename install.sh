@@ -42,27 +42,6 @@ function homebrew() {
   brew bundle --file homebrew/.Brewfile
 }
 
-function vscode() {
-  if [ "$(uname)" != "Darwin" ]; then
-    return
-  fi
-
-  if [ ! -e "/Applications/Visual Studio Code.app" ]; then
-    brew cask install visual-studio-code
-  fi
-
-  mkdir -p "$HOME/Library/Application Support/Code/User"
-
-  if [ "$TERM_PROGRAM" = "vscode" ]; then
-    skip
-  fi
-
-  code --install-extension github.github-vscode-theme
-  code --install-extension github.vscode-pull-request-github
-  code --install-extension lfs.vscode-emacs-friendly
-  code --install-extension ms-vscode-remote.vscode-remote-extensionpack
-}
-
 function gnu-stow() {
   case $(uname -s) in
     Linux*)
@@ -72,8 +51,6 @@ function gnu-stow() {
       if ! command -v stow > /dev/null; then
         brew install stow
       fi
-
-      stow --verbose --restow vscode --target "$HOME/Library/Application Support/Code/User"
       ;;
   esac
 
@@ -84,5 +61,4 @@ function gnu-stow() {
 install "zgen" zgen
 install "XCode" xcode
 install "homebrew" homebrew
-install "VSCode" vscode
 install "stow" gnu-stow
