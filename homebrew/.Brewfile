@@ -31,6 +31,8 @@ brew 'sqlite'
 
 brew 'hledger'
 
+brew 'ccmenu'
+
 cask '1password'
 cask 'spotify'
 cask 'dropbox'
