@@ -31,15 +31,14 @@ brew 'sqlite'
 
 brew 'hledger'
 
-brew 'ccmenu'
-
 cask '1password'
-cask 'spotify'
+cask 'ccmenu'
 cask 'dropbox'
+cask 'firefox'
 cask 'flux'
 cask 'google-chrome'
-cask 'firefox'
 cask 'sketch'
+cask 'spotify'
 cask 'visual-studio-code'
 
 mas 'Things3', id: 904280696
