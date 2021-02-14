@@ -1,5 +1,9 @@
+[include]
+  path = ~/.gitconfig.local
+
 [user]
 	name = Chris Lloyd
+  email = christopher.lloyd@gmail.com
 	useConfigOnly = true
 
 [alias]
@@ -36,7 +40,6 @@
 
 [commit]
 	template = ~/.gitmessage
-  gpgsign = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
