@@ -35,7 +35,10 @@ fi
 # https://brew.sh/
 
 if type brew &>/dev/null; then
-  FPATH=$HOMEBREW_PREFIX/share/zsh/site-functions:$FPATH
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+  compinit
 fi
 
 # Prompt
