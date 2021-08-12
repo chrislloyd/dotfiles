@@ -45,7 +45,7 @@ function homebrew() {
 function gnu-stow() {
   case $(uname -s) in
     Linux*)
-      sudo apt install stow
+      apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install stow
       ;;
     Darwin*)
       if ! command -v stow > /dev/null; then
