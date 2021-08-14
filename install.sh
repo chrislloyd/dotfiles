@@ -6,7 +6,6 @@ function install() {
   ($2)
 }
 
-
 function skip() {
   echo "Skipping"
 }
@@ -42,23 +41,37 @@ function homebrew() {
   brew bundle --file homebrew/.Brewfile
 }
 
-function gnu-stow() {
-  case $(uname -s) in
-    Linux*)
-      apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install stow
-      ;;
-    Darwin*)
-      if ! command -v stow > /dev/null; then
-        brew install stow
-      fi
-      ;;
-  esac
-
-  stow --verbose --restow bash editorconfig emacs git shell zsh
-}
-
 # Install dependencies
 install "zgen" zgen
 install "XCode" xcode
 install "homebrew" homebrew
-install "stow" gnu-stow
+
+__dirname=$(cd $(dirname $0); pwd)
+pushd $PWD
+cd
+
+# bash
+ln -s -f $__dirname/bash/.bash_profile .
+ln -s -f $__dirname/bash/.bashrc .
+
+# editorconfig
+ln -s -f $__dirname/editorconfig/.editorconfig .
+
+# emacs
+ln -s -f $__dirname/emacs/.emacs.d .
+
+# git
+ln -s -f $__dirname/git/.gitconfig .
+ln -s -f $__dirname/git/.gitignore .
+ln -s -f $__dirname/git/.gitmessage .
+
+# shell
+touch .hushlogin
+ln -s -f $__dirname/shell/.inputrc .
+ln -s -f $__dirname/shell/.profile .
+
+# zsh
+ln -s -f $__dirname/zsh/.zprofile .
+ln -s -f $__dirname/zsh/.zshrc .
+
+popd
