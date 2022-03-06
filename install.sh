@@ -54,6 +54,11 @@ cd
 ln -s -f $__dirname/bash/.bash_profile .
 ln -s -f $__dirname/bash/.bashrc .
 
+# ssh
+mkdir -p .ssh
+mkdir -p .ssh/config.d
+ln -s -f $__dirname/ssh/config ./.ssh
+
 # editorconfig
 ln -s -f $__dirname/editorconfig/.editorconfig .
 
