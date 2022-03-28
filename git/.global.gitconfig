@@ -22,9 +22,6 @@
 	excludesfile = ~/.gitignore
 	editor = code --wait
 
-[credential]
-	helper = osxkeychain
-
 [push]
 	default = current
 
