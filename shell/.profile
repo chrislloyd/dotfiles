@@ -37,6 +37,10 @@ PATH=$PATH:$HOME/Library/Python/3.7/bin
 # Ruby
 export GEM_HOME=$HOME/.gem
 PATH=$PATH:$GEM_HOME/bin
+PATH=/usr/local/opt/ruby/bin:$PATH
+export LDFLAGS="-L/usr/local/opt/ruby/lib"
+export CPPFLAGS="-I/usr/local/opt/ruby/include"
+export PKG_CONFIG_PATH="/usr/local/opt/ruby/lib/pkgconfig"
 
 # Rust
 PATH=$PATH:$HOME/.cargo/bin
