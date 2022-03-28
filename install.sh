@@ -57,7 +57,7 @@ ln -s -f $__dirname/bash/.bashrc .
 # ssh
 mkdir -p .ssh
 mkdir -p .ssh/config.d
-ln -s -f $__dirname/ssh/config ./.ssh
+ln -s -f $__dirname/ssh/config .ssh
 
 # editorconfig
 ln -s -f $__dirname/editorconfig/.editorconfig .
@@ -66,7 +66,8 @@ ln -s -f $__dirname/editorconfig/.editorconfig .
 ln -s -f $__dirname/emacs/.emacs.d .
 
 # git
-ln -s -f $__dirname/git/.gitconfig .
+cp $__dirname/git/.gitconfig .
+ln -s -f $__dirname/git/.global.gitconfig .
 ln -s -f $__dirname/git/.gitignore .
 ln -s -f $__dirname/git/.gitmessage .
 
