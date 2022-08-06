@@ -28,10 +28,12 @@ cask '1password'
 cask 'dropbox'
 cask 'visual-studio-code'
 
-mas 'Things 3', id: 904280696
+mas 'Xcode', id: 497799835
 mas 'iA Writer', id: 775737590
 mas 'Pixelmator Pro', id: 1289583905
 mas '1Password for Safari', id: 1569813296
+mas 'Muse', id: 1501563902
+mas 'Things 3', id: 904280696
 
 cask 'font-ia-writer-duospace'
 cask 'font-inter'

@@ -2,6 +2,9 @@
 
 export EDITOR="code -w"
 PATH=/usr/local/sbin:$PATH
+PATH="$HOME/bin:$PATH"
+
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 s () {
   cd "$HOME/src/$1" || return
@@ -14,4 +17,3 @@ d () {
 alias ..="cd .."
 alias ...="cd ../.."
 
-PATH="$HOME/bin:$PATH"

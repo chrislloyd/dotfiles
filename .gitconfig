@@ -1,5 +1,6 @@
 [user]
 	name = Chris Lloyd
+        email = chris@chrislloyd.net
 	useConfigOnly = true
 
 [alias]
