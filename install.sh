@@ -32,9 +32,6 @@ ln -s -f "$DOTFILES/.ssh/config" .ssh
 # editorconfig
 ln -s -f "$DOTFILES/.editorconfig" .
 
-# emacs
-ln -s -f "$DOTFILES/.emacs.d" .
-
 # git
 cp "$DOTFILES/git/.gitconfig" .
 ln -s -f "$DOTFILES/git/.global.gitconfig" .
