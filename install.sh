@@ -31,6 +31,8 @@ ln -s -f $DOTFILES/git/.gitmessage .
 
 # shell
 touch .hushlogin
+mkdir -p bin
+mkdir -p src
 ln -s -f $DOTFILES/shell/.inputrc .
 ln -s -f $DOTFILES/shell/.profile .
 
@@ -55,7 +57,8 @@ if [ "$(uname)" == "Darwin" ]
 then
   if ! command -v brew > /dev/null
   then
-    CI=true /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+    eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
   ln -s -f $DOTFILES/homebrew/Brewfile .Brewfile
   brew bundle --no-upgrade --global
