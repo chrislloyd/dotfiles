@@ -1,8 +1,15 @@
+#!/bin/sh
+
 export EDITOR="code -w"
 PATH=/usr/local/sbin:$PATH
 
-function s () { cd "$HOME/src/$1"; }
-function d () { cd "$HOME/Desktop/$1"; }
+s () {
+  cd "$HOME/src/$1" || return
+}
+
+d () {
+  cd "$HOME/Desktop/$1" || return
+}
 
 alias ..="cd .."
 alias ...="cd ../.."

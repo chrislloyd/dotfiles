@@ -1,5 +1,6 @@
-# zsh opts.
-# http://zsh.sourceforge.net/Doc/Release/Options.html
+#!/bin/zsh
+
+# Docs: http://zsh.sourceforge.net/Doc/Release/Options.html
 
 setopt APPEND_HISTORY
 setopt AUTOCD
