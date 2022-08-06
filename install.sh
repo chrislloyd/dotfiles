@@ -9,37 +9,37 @@ cd
 # config
 mkdir -p .config
 
+# shell
+touch .hushlogin
+mkdir -p bin
+mkdir -p src
+ln -s -f "$DOTFILES/.inputrc" .
+ln -s -f "$DOTFILES/.profile" .
+
 # bash
-ln -s -f "$DOTFILES/bash/.bash_profile" .
-ln -s -f "$DOTFILES/bash/.bashrc" .
+ln -s -f "$DOTFILES/.bash_profile" .
+ln -s -f "$DOTFILES/.bashrc" .
+
+# zsh
+ln -s -f "$DOTFILES/.zprofile" .
+ln -s -f "$DOTFILES/.zshrc" .
 
 # ssh
 mkdir -p .ssh
 mkdir -p .ssh/config.d
-ln -s -f "$DOTFILES/ssh/config" .ssh
+ln -s -f "$DOTFILES/.ssh/config" .ssh
 
 # editorconfig
-ln -s -f "$DOTFILES/editorconfig/.editorconfig" .
+ln -s -f "$DOTFILES/.editorconfig" .
 
 # emacs
-ln -s -f "$DOTFILES/emacs/.emacs.d" .
+ln -s -f "$DOTFILES/.emacs.d" .
 
 # git
 cp "$DOTFILES/git/.gitconfig" .
 ln -s -f "$DOTFILES/git/.global.gitconfig" .
 ln -s -f "$DOTFILES/git/.gitignore" .
 ln -s -f "$DOTFILES/git/.gitmessage" .
-
-# shell
-touch .hushlogin
-mkdir -p bin
-mkdir -p src
-ln -s -f "$DOTFILES/shell/.inputrc" .
-ln -s -f "$DOTFILES/shell/.profile" .
-
-# zsh
-ln -s -f "$DOTFILES/zsh/.zprofile" .
-ln -s -f "$DOTFILES/zsh/.zshrc" .
 
 # zgen
 if [ ! -d "${HOME}/.zgen" ]
