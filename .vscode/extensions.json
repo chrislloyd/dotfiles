@@ -1,5 +1,7 @@
 {
   "recommendations": [
     "timonwong.shellcheck",
+    "editorconfig.editorconfig",
+    "github.github-vscode-theme",
   ]
 }
