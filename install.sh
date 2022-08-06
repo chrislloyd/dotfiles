@@ -58,7 +58,7 @@ then
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
     eval "$(/opt/homebrew/bin/brew shellenv)"
   fi
-  ln -s -f "$DOTFILES/homebrew/Brewfile" .Brewfile
+  ln -s -f "$DOTFILES/.Brewfile" .
   brew bundle --no-upgrade --global
 fi
 
