@@ -11,8 +11,6 @@ mkdir -p .config
 
 # shell
 touch .hushlogin
-mkdir -p bin
-mkdir -p src
 ln -s -f "$DOTFILES/.inputrc" .
 ln -s -f "$DOTFILES/.profile" .
 
@@ -60,6 +58,19 @@ then
   brew analytics off
   ln -s -f "$DOTFILES/.Brewfile" .
   brew bundle --no-upgrade --global || true
+fi
+
+# bin
+mkdir -p bin
+ln -s -f "$DOTFILES/bin"/* bin
+
+# developer
+mkdir -p src
+
+# launchd
+if [ "$(uname)" == "Darwin" ]
+then
+  ln -s -f "$DOTFILES/LaunchAgents"/*.plist Library/LaunchAgents
 fi
 
 # osx
