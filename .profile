@@ -17,3 +17,11 @@ d () {
 alias ..="cd .."
 alias ...="cd ../.."
 
+# ruby
+if [ -d /opt/homebrew/opt/ruby ];
+then
+  export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+  export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
+  export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
+  export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
+fi
