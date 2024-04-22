@@ -3,14 +3,11 @@ set -euo pipefail
 
 DOTFILES=$(cd "$(dirname "$0")"; pwd)
 readonly DOTFILES
+export DOTFILES
 pushd "$PWD"
 cd
 
-# config
-mkdir -p .config
-
 # shell
-touch .hushlogin
 ln -s -f "$DOTFILES/.inputrc" .
 ln -s -f "$DOTFILES/.profile" .
 
@@ -19,7 +16,6 @@ ln -s -f "$DOTFILES/.bash_profile" .
 ln -s -f "$DOTFILES/.bashrc" .
 
 # zsh
-ln -s -f "$DOTFILES/.zprofile" .
 ln -s -f "$DOTFILES/.zshrc" .
 
 # ssh
@@ -41,25 +37,6 @@ then
   git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
 fi
 
-# xcode
-if [ "$(uname)" == "Darwin" ] && [ ! "$(xcode-select -p 1>/dev/null;echo $?)" ]
-then
-  sudo xcode-select --install
-fi
-
-# homebrew
-if [ "$(uname)" == "Darwin" ]
-then
-  if ! command -v brew > /dev/null
-  then
-    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-    eval "$(/opt/homebrew/bin/brew shellenv)"
-  fi
-  brew analytics off
-  ln -s -f "$DOTFILES/.Brewfile" .
-  brew bundle --no-upgrade --global || true
-fi
-
 # bin
 mkdir -p bin
 ln -s -f "$DOTFILES/bin"/* bin
@@ -67,11 +44,14 @@ ln -s -f "$DOTFILES/bin"/* bin
 # developer
 mkdir -p src
 
-# launchd
+# platform-specific
 if [ "$(uname)" == "Darwin" ]
 then
-  ln -s -f "$DOTFILES/LaunchAgents"/*.plist Library/LaunchAgents
+    "$DOTFILES"/macos.sh
+else
+    "$DOTFILES"/linux.sh
 fi
+
 
 # osx
 if [ "$(uname)" == "Darwin" ]

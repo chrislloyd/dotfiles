@@ -19,7 +19,10 @@ SAVEHIST=5000
 HISTSIZE=2000
 
 # Load standard shell profile
-[[ -e "${HOME}/.profile" ]] && source "${HOME}/.profile"
+if [[ -e "${HOME}/.profile" ]]
+then
+  source "${HOME}/.profile"
+fi
 
 # Zgen
 # https://github.com/tarjoilija/zgen

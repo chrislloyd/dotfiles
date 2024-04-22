@@ -17,13 +17,13 @@ d () {
 alias ..="cd .."
 alias ...="cd ../.."
 
-# ruby
-PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-if [ -d /opt/homebrew/opt/ruby ]
+# homebrew
+if [ -d /opt/homebrew ]
 then
-  export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
-  export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
-  export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
+  export CPATH="/opt/homebrew/include"
+  export LDFLAGS="-L/opt/homebrew/lib"
+  export CPPFLAGS="-I/opt/homebrew/include"
+  export LIBRARY_PATH="/opt/homebrew/lib"
 fi
 
 # deno
@@ -32,3 +32,14 @@ if [ -d "$DENO_INSTALL_ROOT" ]
 then
   PATH="$DENO_INSTALL_ROOT/bin:$PATH"
 fi
+
+# cargo
+. "$HOME/.cargo/env"
+
+# obsidian
+export OBSIDIAN_VAULT_ID="69f2a33bbeb12d4b"
+
+vault () {
+  _path=$(jq ".vaults.\"$OBSIDIAN_VAULT_ID\".path" --raw-output < "$HOME/Library/Application Support/obsidian/obsidian.json")
+  cd "$_path" || return
+}
