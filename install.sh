@@ -38,8 +38,7 @@ then
 fi
 
 # bin
-mkdir -p bin
-ln -s -f "$DOTFILES/bin"/* bin
+ln -s -f "$DOTFILES/bin" bin
 
 # developer
 mkdir -p src
