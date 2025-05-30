@@ -37,6 +37,9 @@ ln -s -f "$DOTFILES/bin" bin
 # developer
 mkdir -p src
 
+# config
+mkdir -p .config
+
 # platform-specific
 if [ "$(uname)" == "Darwin" ]
 then
