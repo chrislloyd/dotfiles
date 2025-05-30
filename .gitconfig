@@ -2,6 +2,7 @@
 	name = Chris Lloyd
         email = chris@chrislloyd.net
 	useConfigOnly = true
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILHQNDx1MH6fdpsCw33NB+Tdp71zgGLsAZUCo2I/MMYC
 
 [alias]
 	b = branch
@@ -34,6 +35,7 @@
 
 [commit]
 	template = ~/.gitmessage
+	gpgsign = true
 
 [filter "lfs"]
 	clean = git-lfs clean -- %f
@@ -43,3 +45,13 @@
 
 [init]
 	defaultBranch = main
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign
+	allowedSignersFile = /Users/chrislloyd/.ssh/allowed_signers
+
+[credential "https://github.com"]
+	helper = !/opt/homebrew/bin/gh auth git-credential
