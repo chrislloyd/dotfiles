@@ -31,12 +31,6 @@ ln -s -f "$DOTFILES/.gitconfig" .
 ln -s -f "$DOTFILES/.gitignore" .
 ln -s -f "$DOTFILES/.gitmessage" .
 
-# zgen
-if [ ! -d "${HOME}/.zgen" ]
-then
-  git clone https://github.com/tarjoilija/zgen.git "${HOME}/.zgen"
-fi
-
 # bin
 ln -s -f "$DOTFILES/bin" bin
 

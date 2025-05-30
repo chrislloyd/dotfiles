@@ -24,17 +24,6 @@ then
   source "${HOME}/.profile"
 fi
 
-# Zgen
-# https://github.com/tarjoilija/zgen
-
-source "${HOME}/.zgen/zgen.zsh"
-if ! zgen saved; then
-	zgen load lukechilds/zsh-nvm
-	zgen load zsh-users/zsh-syntax-highlighting
-  zgen load unixorn/autoupdate-zgen
-	zgen save
-fi
-
 # Homebrew
 # https://brew.sh/
 
