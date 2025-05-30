@@ -40,6 +40,10 @@ mkdir -p src
 # config
 mkdir -p .config
 
+# nix
+mkdir -p .config/nix
+ln -s f "$DOTFILES/nix.conf" .config/nix
+
 # platform-specific
 if [ "$(uname)" == "Darwin" ]
 then
