@@ -1,0 +1,1 @@
+- Prefer guard style over nested conditionals

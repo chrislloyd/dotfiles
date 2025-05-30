@@ -5,6 +5,10 @@ DOTFILES=$(cd "$(dirname "$0")"; pwd)
 readonly DOTFILES
 export DOTFILES
 pushd "$PWD"
+trap popd EXIT
+
+# --
+
 cd
 
 # shell
@@ -41,8 +45,10 @@ mkdir -p src
 mkdir -p .config
 
 # nix
-mkdir -p .config/nix
-ln -s f "$DOTFILES/nix.conf" .config/nix
+ln -s -f "$DOTFILES"/.config/* .config/
+
+# claude
+ln -s -f "$DOTFILES"/.claude/* .claude/
 
 # platform-specific
 if [ "$(uname)" == "Darwin" ]
@@ -51,5 +57,3 @@ then
 else
     "$DOTFILES"/linux.sh
 fi
-
-popd
