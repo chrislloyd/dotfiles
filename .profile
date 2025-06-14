@@ -35,7 +35,10 @@ then
 fi
 
 # cargo
-. "$HOME/.cargo/env"
+if [ -d "$HOME/.cargo" ]
+then
+  . "$HOME/.cargo/env"
+fi
 
 # python
 PATH="$HOME/Library/Python/3.12/bin:$PATH"
@@ -48,13 +51,12 @@ vault () {
   cd "$_path" || return
 }
 
-# cargo
-. "$HOME/.cargo/env"
-
 # nvm
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+[ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+[ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 # bun
 [ -s "/Users/chrislloyd/.bun/_bun" ] && source "/Users/chrislloyd/.bun/_bun"

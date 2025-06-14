@@ -48,6 +48,7 @@ mkdir -p .config
 ln -s -f "$DOTFILES"/.config/* .config/
 
 # claude
+mkdir -p .claude
 ln -s -f "$DOTFILES"/.claude/* .claude/
 
 # platform-specific
