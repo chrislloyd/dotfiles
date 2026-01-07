@@ -1,0 +1,17 @@
+#!/bin/sh
+# Create a new executable shell script and open in editor
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: mksh <script-name>" >&2
+  exit 1
+fi
+
+cat > "$1" << 'EOF'
+#!/bin/sh
+set -e
+
+EOF
+
+chmod +x "$1"
+${EDITOR:-vi} "$1"

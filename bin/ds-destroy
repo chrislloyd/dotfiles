@@ -1,0 +1,3 @@
+#!/bin/sh
+# Remove all .DS_Store files in current directory tree
+find "${1:-.}" -name '.DS_Store' -type f -delete -print

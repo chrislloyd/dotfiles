@@ -1,0 +1,36 @@
+#!/bin/sh
+# Extract text from an image using macOS Vision framework
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: ocr <image-file>" >&2
+  exit 1
+fi
+
+if [ ! -f "$1" ]; then
+  echo "ocr: $1: No such file" >&2
+  exit 1
+fi
+
+# Use shortcuts to run OCR (requires macOS 12+)
+shortcuts run "Extract Text from Image" -i "$1" 2>/dev/null || {
+  # Fallback: use Python with Vision framework
+  python3 -c "
+import Vision
+import Quartz
+from Foundation import NSURL
+
+url = NSURL.fileURLWithPath_('$1')
+source = Quartz.CGImageSourceCreateWithURL(url, None)
+image = Quartz.CGImageSourceCreateImageAtIndex(source, 0, None)
+
+request = Vision.VNRecognizeTextRequest.alloc().init()
+request.setRecognitionLevel_(Vision.VNRequestTextRecognitionLevelAccurate)
+
+handler = Vision.VNImageRequestHandler.alloc().initWithCGImage_options_(image, None)
+handler.performRequests_error_([request], None)
+
+for obs in request.results():
+    print(obs.topCandidates_(1)[0].string())
+"
+}

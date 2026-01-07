@@ -1,0 +1,7 @@
+#!/bin/sh
+# Pretty-print JSON from stdin or file
+if [ -n "$1" ]; then
+  jq . "$1"
+else
+  jq .
+fi

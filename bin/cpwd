@@ -1,0 +1,3 @@
+#!/bin/sh
+# Copy current working directory to clipboard
+pwd | tr -d '\n' | pbcopy

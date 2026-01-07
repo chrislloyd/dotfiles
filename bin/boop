@@ -1,0 +1,14 @@
+#!/bin/sh
+# Run a command and play success/failure sound
+# Usage: boop <command>
+
+"$@"
+status=$?
+
+if [ $status -eq 0 ]; then
+  afplay /System/Library/Sounds/Glass.aiff &
+else
+  afplay /System/Library/Sounds/Basso.aiff &
+fi
+
+exit $status

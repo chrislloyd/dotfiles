@@ -1,0 +1,9 @@
+#!/bin/sh
+# View source of an executable in PATH
+cmd=$(command -v "$1") || { echo "catbin: $1 not found" >&2; exit 1; }
+if file "$cmd" | grep -q "text"; then
+  cat "$cmd"
+else
+  echo "catbin: $1 is a binary, not a script" >&2
+  exit 1
+fi

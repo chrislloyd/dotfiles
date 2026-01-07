@@ -1,0 +1,12 @@
+#!/bin/sh
+# Move files to trash instead of permanent deletion
+set -e
+
+for file in "$@"; do
+  if [ -e "$file" ]; then
+    mv "$file" ~/.Trash/
+  else
+    echo "trash: $file: No such file or directory" >&2
+    exit 1
+  fi
+done

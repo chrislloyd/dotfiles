@@ -1,0 +1,30 @@
+#!/bin/sh
+# Gracefully kill a process with escalating signals
+set -e
+
+if [ -z "$1" ]; then
+  echo "Usage: murder <process-name-or-pid>" >&2
+  exit 1
+fi
+
+# Find PID if name given
+if echo "$1" | grep -qE '^[0-9]+$'; then
+  pid="$1"
+else
+  pid=$(pgrep -x "$1" 2>/dev/null || pgrep "$1" 2>/dev/null | head -1)
+  if [ -z "$pid" ]; then
+    echo "murder: no process matching '$1'" >&2
+    exit 1
+  fi
+fi
+
+echo "Sending SIGTERM to $pid..."
+kill -TERM "$pid" 2>/dev/null || true
+sleep 1
+
+if kill -0 "$pid" 2>/dev/null; then
+  echo "Still alive, sending SIGKILL..."
+  kill -KILL "$pid" 2>/dev/null || true
+fi
+
+echo "Done."
