@@ -84,3 +84,7 @@ if ! shopt -oq posix; then
 fi
 
 source "$HOME/.cargo/env"
+
+# atuin
+[[ -f ~/.bash-preexec.sh ]] && source ~/.bash-preexec.sh
+eval "$(atuin init bash)"

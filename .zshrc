@@ -36,3 +36,6 @@ fi
 
 # Prompt
 PS1='%F{240}%2~%f %(?.%F{240}.%F{red})%#%f '
+
+# atuin
+eval "$(atuin init zsh)"
