@@ -39,7 +39,7 @@ ln -s -f "$DOTFILES/.gitmessage" .
 ln -s -f "$DOTFILES/bin" bin
 
 # developer
-mkdir -p src
+mkdir -p code
 
 # config
 mkdir -p .config

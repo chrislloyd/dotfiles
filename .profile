@@ -8,7 +8,7 @@ PATH="$HOME/.local/bin:$PATH"
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
 s () {
-  cd "$HOME/src/$1" || return
+  cd "$HOME/code/$1" || return
 }
 
 d () {
