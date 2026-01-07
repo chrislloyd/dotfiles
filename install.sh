@@ -7,49 +7,78 @@ export DOTFILES
 pushd "$PWD"
 trap popd EXIT
 
+link() {
+  local source="$1"
+  local target="$2"
+
+  if [ ! -e "$source" ]; then
+    echo "Error: $source does not exist"
+    return 1
+  fi
+
+  if [ -L "$target" ]; then
+    return 0
+  elif [ -e "$target" ]; then
+    echo "Error: $target already exists and is not a symlink"
+    return 1
+  else
+    ln -sF "$source" "$target"
+  fi
+}
+
 # --
 
 cd
 
 # shell
-ln -s -f "$DOTFILES/.inputrc" .
-ln -s -f "$DOTFILES/.profile" .
+link "$DOTFILES/.inputrc" .inputrc
+link "$DOTFILES/.profile" .profile
 
 # bash
-ln -s -f "$DOTFILES/.bash_profile" .
-ln -s -f "$DOTFILES/.bashrc" .
+link "$DOTFILES/.bash_profile" .bash_profile
+link "$DOTFILES/.bashrc" .bashrc
 
 # zsh
-ln -s -f "$DOTFILES/.zshrc" .
+link "$DOTFILES/.zshrc" .zshrc
 
 # ssh
 mkdir -p .ssh
 mkdir -p .ssh/config.d
-ln -s -f "$DOTFILES/.ssh/config" .ssh
+link "$DOTFILES/.ssh/config" .ssh/config
 
 # editorconfig
-ln -s -f "$DOTFILES/.editorconfig" .
+link "$DOTFILES/.editorconfig" .editorconfig
 
 # git
-ln -s -f "$DOTFILES/.gitconfig" .
-ln -s -f "$DOTFILES/.gitignore" .
-ln -s -f "$DOTFILES/.gitmessage" .
+# .gitconfig is NOT symlinked - it's local so `git config --global` works
+if [ ! -e .gitconfig ]; then
+  echo "[include]\n    path = $DOTFILES/.gitconfig.shared" > .gitconfig
+fi
+link "$DOTFILES/.gitignore" .gitignore
+link "$DOTFILES/.gitmessage" .gitmessage
 
 # bin
-ln -s -f "$DOTFILES/bin" bin
+link "$DOTFILES/bin" bin
 
 # developer
 mkdir -p code
 
 # config
 mkdir -p .config
+for item in "$DOTFILES"/.config/*; do
+  name=$(basename "$item")
+  [ "$name" = "atuin" ] && continue
+  [ -e "$item" ] && link "$item" ".config/$name"
+done
 
-# nix
-ln -s -f "$DOTFILES"/.config/* .config/
+# atuin (has runtime state, only symlink config)
+mkdir -p .config/atuin
+link "$DOTFILES/.config/atuin/config.toml" .config/atuin/config.toml
 
 # claude
 mkdir -p .claude
-ln -s -f "$DOTFILES"/.claude/* .claude/
+link "$DOTFILES/.claude/CLAUDE.md" .claude/CLAUDE.md
+link "$DOTFILES/.claude/settings.local.json" .claude/settings.local.json
 
 # platform-specific
 if [ "$(uname)" == "Darwin" ]
