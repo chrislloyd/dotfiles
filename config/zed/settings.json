@@ -1,0 +1,14 @@
+{
+  "show_edit_predictions": true,
+  "languages": {
+    "TypeScript": {
+      "show_edit_predictions": true
+    }
+  },
+  "edit_predictions": {
+    "mode": "eager"
+  },
+  "soft_wrap": "preferred_line_length",
+  "buffer_font_family": "SF Mono",
+  "buffer_font_size": 13
+}

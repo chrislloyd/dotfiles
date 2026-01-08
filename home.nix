@@ -303,6 +303,14 @@
   };
 
   # --
+  # Emacs
+
+  programs.emacs = {
+    enable = true;
+    extraConfig = builtins.readFile ./config/emacs/init.el;
+  };
+
+  # --
   # Dotfiles
 
   home.file = {
@@ -329,5 +337,8 @@
       source = ./bin;
       recursive = true;
     };
+
+    # Zed editor
+    ".config/zed/settings.json".source = ./config/zed/settings.json;
   };
 }
