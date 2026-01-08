@@ -52,26 +52,49 @@
   system.defaults = {
     dock = {
       autohide = true;
-      mru-spaces = false;  # Don't rearrange spaces based on recent use
+      minimize-to-application = true;
+      mru-spaces = false;
       show-recents = false;
+      tilesize = 48;
     };
 
     finder = {
       AppleShowAllExtensions = true;
       FXEnableExtensionChangeWarning = false;
+      QuitMenuItem = true;
+      ShowPathbar = true;
+      ShowStatusBar = true;
       _FXShowPosixPathInTitle = true;
     };
 
+    loginwindow.GuestEnabled = false;
+
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
+      ApplePressAndHoldEnabled = false;
       InitialKeyRepeat = 15;
       KeyRepeat = 2;
-      "com.apple.swipescrolldirection" = false;  # Natural scrolling off
+      NSAutomaticCapitalizationEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticPeriodSubstitutionEnabled = false;
+      NSAutomaticQuoteSubstitutionEnabled = false;
+      NSAutomaticSpellingCorrectionEnabled = false;
+      NSNavPanelExpandedStateForSaveMode = true;
+      NSNavPanelExpandedStateForSaveMode2 = true;
+      PMPrintingExpandedStateForPrint = true;
+      PMPrintingExpandedStateForPrint2 = true;
+      "com.apple.swipescrolldirection" = false;
     };
 
     screencapture = {
       location = "~/Screenshots";
       type = "png";
+    };
+
+    trackpad = {
+      Clicking = true;
+      TrackpadRightClick = true;
+      TrackpadThreeFingerDrag = true;
     };
   };
 
