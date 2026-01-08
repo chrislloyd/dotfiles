@@ -23,6 +23,7 @@
   {
     darwinConfigurations."ChrisBookPro" = nix-darwin.lib.darwinSystem {
       inherit system;
+      specialArgs = { inherit username; };
       modules = [
         ./darwin.nix
 
@@ -31,6 +32,7 @@
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
           home-manager.backupFileExtension = "backup";
+          home-manager.extraSpecialArgs = { inherit username; };
           users.users.${username}.home = "/Users/${username}";
           home-manager.users.${username} = import ./home.nix;
         }

@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, username, ... }:
 
 {
   # System packages (available to all users)
@@ -99,7 +99,7 @@
   };
 
   # Primary user for system defaults and homebrew
-  system.primaryUser = "chrislloyd";
+  system.primaryUser = username;
 
   # Determinate Nix manages the nix installation, so disable nix-darwin's management
   nix.enable = false;
@@ -110,7 +110,7 @@
 
   # LaunchAgents
   launchd.user.agents.sweep-screenshots = {
-    command = "/Users/chrislloyd/.local/bin/sweep";
+    command = "/Users/${username}/.local/bin/sweep";
     serviceConfig = {
       StartCalendarInterval = [{ Hour = 9; Minute = 0; }];
       StandardOutPath = "/tmp/sweep-screenshots.log";
