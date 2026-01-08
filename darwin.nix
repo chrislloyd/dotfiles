@@ -87,7 +87,7 @@
 
   # LaunchAgents
   launchd.user.agents.sweep-screenshots = {
-    command = "/Users/chrislloyd/dotfiles/bin/sweep";
+    command = "/Users/chrislloyd/.local/bin/sweep";
     serviceConfig = {
       StartCalendarInterval = [{ Hour = 9; Minute = 0; }];
       StandardOutPath = "/tmp/sweep-screenshots.log";

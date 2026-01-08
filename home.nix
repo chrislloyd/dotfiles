@@ -323,5 +323,11 @@
 
     # Allowed signers for git signature verification
     ".ssh/allowed_signers".text = "chris@chrislloyd.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGNaRxppN+ku/wiAlyojRGYEEagsZT3uFMyPF1ivpgk";
+
+    # Custom scripts
+    ".local/bin" = {
+      source = ./bin;
+      recursive = true;
+    };
   };
 }
