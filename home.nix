@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, username, email, ... }:
 
 {
   home.stateVersion = "24.05";
@@ -124,6 +124,7 @@
 
     settings = {
       user.name = "Chris Lloyd";
+      user.email = email;
 
       init.defaultBranch = "main";
       push.autoSetupRemote = true;

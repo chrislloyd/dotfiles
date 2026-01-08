@@ -16,10 +16,6 @@ fi
 
 # Install/update nix-darwin and home-manager config
 echo "Building and activating nix-darwin configuration..."
-nix run nix-darwin -- switch --flake ~/dotfiles
-
-# Run home-manager activation
-ACTIVATION=$(grep -oE '/nix/store/[a-z0-9]+-activation-chrislloyd' /run/current-system/activate)
-$ACTIVATION
+sudo nix run nix-darwin -- switch --flake ~/dotfiles#"$(hostname -s)"
 
 echo "Done! Open a new terminal to use the new configuration."
