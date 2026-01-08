@@ -1,4 +1,4 @@
-{ pkgs, lib, username, ... }:
+{ pkgs, username, ... }:
 
 {
   home.stateVersion = "24.05";
@@ -21,26 +21,22 @@
   # Environment variables
 
   home.sessionVariables = {
-    EDITOR = "code -w";
+    EDITOR = "zed -w";
     OBSIDIAN_VAULT_ID = "69f2a33bbeb12d4b";
-    NVM_DIR = "$HOME/.nvm";
-    DENO_INSTALL_ROOT = "$HOME/.deno";
-
-    # Homebrew compiler flags
-    CPATH = "/opt/homebrew/include";
-    LDFLAGS = "-L/opt/homebrew/lib";
-    CPPFLAGS = "-I/opt/homebrew/include";
-    LIBRARY_PATH = "/opt/homebrew/lib";
   };
 
   home.sessionPath = [
-    "$HOME/dotfiles/bin"
     "$HOME/.local/bin"
-    "$HOME/.deno/bin"
-    "$HOME/Library/Python/3.12/bin"
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
   ];
+
+  # Shared across all shells
+  home.shellAliases = {
+    ".." = "cd ..";
+    "..." = "cd ../..";
+    d = "cd ~/Desktop";
+  };
 
   # --
   # Zsh
@@ -62,57 +58,16 @@
 
     historySubstringSearch.enable = true;
 
-    shellAliases = {
-      ".." = "cd ..";
-      "..." = "cd ../..";
-    };
+    initContent = ''
+      setopt CORRECT
+      setopt EXTENDED_GLOB
+      setopt MAILWARN
+      setopt PROMPT_SUBST
+      setopt interactive_comments
 
-    initContent = lib.mkMerge [
-      # Early init (before compinit)
-      (lib.mkOrder 500 ''
-        setopt CORRECT
-        setopt EXTENDED_GLOB
-        setopt MAILWARN
-        setopt PROMPT_SUBST
-        setopt interactive_comments
-      '')
-
-      # Main init (high priority to run after other configs)
-      (lib.mkOrder 2000 ''
-        # Prompt
-        PS1='%F{240}%2~%f %(?.%F{240}.%F{red})%#%f '
-
-        # Quick jump to code directory
-        s() {
-          cd ~/code/"$1" || return
-        }
-
-        # Quick jump to Desktop
-        d() {
-          cd ~/Desktop/"$1" || return
-        }
-
-        # Jump to Obsidian vault
-        vault() {
-          _path=$(jq ".vaults.\"$OBSIDIAN_VAULT_ID\".path" --raw-output < "$HOME/Library/Application Support/obsidian/obsidian.json")
-          cd "$_path" || return
-        }
-
-        # nvm
-        [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-        [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-        [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"
-
-        # cargo
-        [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-
-        # bun
-        [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-        # ghcup
-        [ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env"
-      '')
-    ];
+      PS1='%F{240}%2~%f %(?.%F{240}.%F{red})%#%f '
+      source ~/.config/shell/functions.sh
+    '';
   };
 
   # --
@@ -134,70 +89,17 @@
       "checkwinsize"
     ];
 
-    shellAliases = {
-      ".." = "cd ..";
-      "..." = "cd ../..";
-    };
-
     initExtra = ''
-      # Prompt
       PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w \$\[\033[00m\] '
 
-      # Color support
       if [ -x /usr/bin/dircolors ]; then
         test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
         alias ls='ls --color=auto'
         alias grep='grep --color=auto'
       fi
 
-      # Functions
-      s() {
-        cd ~/code/"$1" || return
-      }
-
-      d() {
-        cd ~/Desktop/"$1" || return
-      }
-
-      vault() {
-        _path=$(jq ".vaults.\"$OBSIDIAN_VAULT_ID\".path" --raw-output < "$HOME/Library/Application Support/obsidian/obsidian.json")
-        cd "$_path" || return
-      }
-
-      # cargo
-      [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
-
-      # nvm
-      [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-      # ghcup
-      [ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env"
+      source ~/.config/shell/functions.sh
     '';
-  };
-
-  # --
-  # Readline
-
-  programs.readline = {
-    enable = true;
-    variables = {
-      bell-style = "none";
-      completion-query-items = 200;
-      mark-symlinked-directories = true;
-      match-hidden-files = false;
-      skip-completed-text = true;
-      visible-stats = true;
-      input-meta = true;
-      output-meta = true;
-      convert-meta = false;
-    };
-    bindings = {
-      "\\C-d" = "possible-completions";
-      "\\e[A" = "history-search-backward";
-      "\\e[B" = "history-search-forward";
-      "\\e[1;5D" = "backward-word";
-      "\\e[1;5C" = "forward-word";
-    };
   };
 
   # --
@@ -222,7 +124,6 @@
 
     settings = {
       user.name = "Chris Lloyd";
-      # user.email = "your@email.com";  # Set this!
 
       init.defaultBranch = "main";
       push.autoSetupRemote = true;
@@ -235,9 +136,7 @@
         ssh.allowedSignersFile = "~/.ssh/allowed_signers";
       };
 
-      core = {
-        editor = "code -w";
-      };
+      core.editor = "zed -w";
 
       alias = {
         co = "checkout";
@@ -314,34 +213,17 @@
   # Dotfiles
 
   home.file = {
-    # Editorconfig
-    ".editorconfig".text = ''
-      root = true
-
-      [*]
-      indent_style = space
-      tab_width = 2
-
-      [*.gitconfig]
-      tab_width = 8
-    '';
-
-    # SSH config.d directory
+    ".editorconfig".source = ./config/editorconfig;
     ".ssh/config.d/.keep".text = "";
-
-    # Allowed signers for git signature verification
     ".ssh/allowed_signers".text = "chris@chrislloyd.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGNaRxppN+ku/wiAlyojRGYEEagsZT3uFMyPF1ivpgk";
 
-    # Custom scripts
     ".local/bin" = {
       source = ./bin;
       recursive = true;
     };
 
-    # Zed editor
     ".config/zed/settings.json".source = ./config/zed/settings.json;
-
-    # Claude Code
+    ".config/shell/functions.sh".source = ./config/shell/functions.sh;
     ".claude/CLAUDE.md".source = ./config/claude/CLAUDE.md;
   };
 }
