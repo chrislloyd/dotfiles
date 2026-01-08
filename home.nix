@@ -232,6 +232,7 @@
       gpg = {
         format = "ssh";
         ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+        ssh.allowedSignersFile = "~/.ssh/allowed_signers";
       };
 
       core = {
@@ -319,5 +320,8 @@
 
     # SSH config.d directory
     ".ssh/config.d/.keep".text = "";
+
+    # Allowed signers for git signature verification
+    ".ssh/allowed_signers".text = "chris@chrislloyd.net ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPGNaRxppN+ku/wiAlyojRGYEEagsZT3uFMyPF1ivpgk";
   };
 }
