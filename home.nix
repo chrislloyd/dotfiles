@@ -340,5 +340,8 @@
 
     # Zed editor
     ".config/zed/settings.json".source = ./config/zed/settings.json;
+
+    # Claude Code
+    ".claude/CLAUDE.md".source = ./config/claude/CLAUDE.md;
   };
 }
