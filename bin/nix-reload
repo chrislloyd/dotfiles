@@ -1,0 +1,8 @@
+#!/bin/sh
+set -e
+
+sudo darwin-rebuild switch --flake ~/dotfiles
+
+# Run home-manager activation (darwin-rebuild doesn't always do this)
+ACTIVATION=$(grep -oE '/nix/store/[a-z0-9]+-activation-chrislloyd' /run/current-system/activate)
+$ACTIVATION
