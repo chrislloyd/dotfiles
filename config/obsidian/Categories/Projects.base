@@ -1,0 +1,17 @@
+filters:
+  and:
+    - category.contains(link("Projects.base"))
+    - file.folder != "Templates"
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - status
+      - year
+      - url
+    sort:
+      - property: property.year
+        direction: DESC
+      - property: property.status
+        direction: ASC

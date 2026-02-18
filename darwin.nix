@@ -1,17 +1,6 @@
-{ pkgs, username, ... }:
+{ username, ... }:
 
 {
-  # System packages (available to all users)
-  environment.systemPackages = with pkgs; [
-    bat
-    claude-code
-    fd
-    git
-    jq
-    ripgrep
-    tree
-  ];
-
   # Homebrew integration for casks and Mac App Store apps
   # Nix can't install these directly, so we manage Homebrew declaratively
   homebrew = {
@@ -36,7 +25,6 @@
       "ghostty"
       "netnewswire"
       "obsidian"
-      "visual-studio-code"
       "zed"
     ];
 

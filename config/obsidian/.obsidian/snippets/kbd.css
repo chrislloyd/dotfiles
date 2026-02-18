@@ -1,0 +1,6 @@
+kbd {
+  border: 2px solid currentColor;
+  border-radius: 4px;
+  padding-inline: 4px;
+  font-size: inherit;
+}

@@ -1,0 +1,39 @@
+/* Ref: https://docs.obsidian.md/Reference/CSS+variables/Publish/Publish */
+
+body {
+    --font-sans: Optima, Candara, Noto Sans, source-sans-pro, sans-serif;
+    --font-display: Avenir, Montserrat, Corbel, URW Gothic, source-sans-pro,
+        sans-serif;
+
+    /* https://docs.obsidian.md/Reference/CSS+variables/Publish/Site+fonts#CSS+variables */
+    --font-text-size: 1rem;
+    --font-text-theme: var(--font-sans);
+    --font-interface: var(--font-display);
+
+    /* https://docs.obsidian.md/Reference/CSS+variables/Foundations/Typography#Line+heights */
+    --line-height-normal: 2;
+    --line-height-tight: 1.25;
+
+    /* https://docs.obsidian.md/Reference/CSS+variables/Editor/Headings#CSS+variables */
+    --h1-size: var(--font-text-size);
+    --h2-size: var(--font-text-size);
+    --h3-size: var(--font-text-size);
+    --h4-size: var(--font-text-size);
+    --h5-size: var(--font-text-size);
+    --h6-size: var(--font-text-size);
+}
+
+.published-container {
+    /* https://docs.obsidian.md/Reference/CSS+variables/Publish/Site+pages#Page+width+and+padding */
+    --page-width: 48rem;
+    --page-padding: 2rem;
+
+    /* https://docs.obsidian.md/Reference/CSS+variables/Publish/Site+pages#Page+title */
+    --page-title-font: var(--font-display);
+    --page-title-size: 1.875rem;
+    --page-title-line-height: var(--line-height-tight);
+}
+
+.site-header {
+    display: none;
+}

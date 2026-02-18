@@ -1,4 +1,4 @@
-{ pkgs, username, email, ... }:
+{ pkgs, lib, config, username, email, ... }:
 
 {
   home.stateVersion = "24.05";
@@ -9,12 +9,19 @@
   # Packages
 
   home.packages = with pkgs; [
-    htop
-    wget
-    shellcheck
-    imagemagick
+    bat
+    claude-code
+    fd
+    git
     graphviz
+    htop
+    imagemagick
+    jq
     rename
+    ripgrep
+    shellcheck
+    tree
+    wget
   ];
 
   # --
@@ -169,7 +176,7 @@
       addKeysToAgent = "yes";
       extraOptions = {
         UseKeychain = "yes";
-        IdentityAgent = "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+        IdentityAgent = "\"~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock\"";
       };
     };
   };
@@ -203,15 +210,23 @@
   };
 
   # --
-  # Emacs
-
-  programs.emacs = {
-    enable = true;
-    extraConfig = builtins.readFile ./config/emacs/init.el;
-  };
-
-  # --
   # Dotfiles
+
+  home.activation.setWallpaper = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    /usr/bin/osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/System/Library/Desktop Pictures/Solid Colors/Blue Violet.png"'
+  '';
+
+  home.activation.setupObsidian = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    DOTFILES="$HOME/dotfiles"
+    VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes"
+
+    for item in .obsidian Templates Categories Code publish.css; do
+      if [ -d "$VAULT" ] && [ ! -L "$VAULT/$item" ]; then
+        $DRY_RUN_CMD rm -rf "$VAULT/$item"
+        $DRY_RUN_CMD ln -s "$DOTFILES/config/obsidian/$item" "$VAULT/$item"
+      fi
+    done
+  '';
 
   home.file = {
     ".editorconfig".source = ./config/editorconfig;
@@ -222,6 +237,7 @@
       source = ./bin;
       recursive = true;
     };
+    ".local/bin/obsidian".source = config.lib.file.mkOutOfStoreSymlink "/Applications/Obsidian.app/Contents/MacOS/Obsidian";
 
     ".config/zed/settings.json".source = ./config/zed/settings.json;
     ".config/shell/functions.sh".source = ./config/shell/functions.sh;

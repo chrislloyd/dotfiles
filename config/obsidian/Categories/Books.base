@@ -1,0 +1,14 @@
+filters:
+  and:
+    - category.contains(link("Books.base"))
+    - file.folder != "Templates"
+views:
+  - type: cards
+    name: Bookshelf
+    order:
+      - title
+      - author
+    image: image
+    cardSize: 240
+    imageFit: contain
+    imageAspectRatio: 1.3

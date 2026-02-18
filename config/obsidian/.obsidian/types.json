@@ -1,0 +1,19 @@
+{
+  "types": {
+    "aliases": "aliases",
+    "cssclasses": "multitext",
+    "tags": "tags",
+    "rating": "number",
+    "portions": "text",
+    "created": "date",
+    "publish": "checkbox",
+    "category": "multitext",
+    "date": "date",
+    "type": "multitext",
+    "status": "multitext",
+    "year": "number",
+    "published": "date",
+    "author": "multitext",
+    "source": "multitext"
+  }
+}

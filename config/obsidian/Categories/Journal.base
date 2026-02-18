@@ -1,0 +1,16 @@
+filters:
+  and:
+    - category.contains(link("Journal.base"))
+    - file.folder != "Templates"
+formulas:
+  Untitled: ""
+  Created: created
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - date
+    sort: []
+    columnSize:
+      file.name: 137

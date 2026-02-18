@@ -1,0 +1,30 @@
+filters:
+  and:
+    - category.contains(link("Races.base"))
+    - file.folder != "Templates"
+formulas: {}
+properties:
+  file.name:
+    displayName: name
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - date
+      - distance
+      - results
+      - time
+      - pace
+    sort:
+      - property: property.date
+        direction: DESC
+      - property: formula.date
+        direction: DESC
+      - property: formula.distance
+        direction: ASC
+      - property: formula.pace
+        direction: ASC
+    columnSize: {}
+  - type: table
+    name: View

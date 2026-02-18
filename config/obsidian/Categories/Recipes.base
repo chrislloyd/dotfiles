@@ -1,0 +1,15 @@
+filters:
+  and:
+    - category.contains(link("Recipes.base"))
+    - '!file.name.contains("Template")'
+views:
+  - type: cards
+    name: Box
+    order:
+      - file.name
+      - publisher
+      - rating
+    image: image
+    imageFit: ""
+    imageAspectRatio: 1
+    cardSize: 180

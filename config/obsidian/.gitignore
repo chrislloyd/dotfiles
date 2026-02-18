@@ -1,0 +1,18 @@
+# obsidian
+.obsidian/community-plugins.json
+.obsidian/core-plugins-migration.json
+.obsidian/plugins
+.obsidian/publish.json
+.obsidian/themes
+.obsidian/workspace.json
+.obsidian/workspace-mobile.json
+.obsidian/starred.json
+
+# files
+*.md
+*.canvas
+
+# attachments
+Attachments
+
+!Templates/*.md

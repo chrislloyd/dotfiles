@@ -1,0 +1,17 @@
+filters:
+  and:
+    - category.contains(link("Meal Plans.base"))
+    - file.folder != "Templates"
+formulas: {}
+views:
+  - type: table
+    name: Table
+    order:
+      - file.name
+      - date
+    sort:
+      - property: property.date
+        direction: DESC
+  - type: cards
+    name: View
+    image: image-url
