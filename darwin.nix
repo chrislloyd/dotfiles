@@ -3,11 +3,12 @@
 {
   # System packages (available to all users)
   environment.systemPackages = with pkgs; [
-    git
-    ripgrep
-    fd
-    jq
     bat
+    claude-code
+    fd
+    git
+    jq
+    ripgrep
     tree
   ];
 
