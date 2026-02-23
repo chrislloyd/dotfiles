@@ -1,4 +1,5 @@
 - Prefer guard style over nested conditionals
+- No get/set accessor prefixes (`foo`, not `getFoo`/`setFoo`)
 
 ## Comments
 

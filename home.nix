@@ -43,6 +43,8 @@
     ".." = "cd ..";
     "..." = "cd ../..";
     d = "cd ~/Desktop";
+    claude = "claude --dangerously-skip-permissions";
+    rebuild = "sudo darwin-rebuild switch --flake \"$HOME/dotfiles#$(hostname -s)\"";
   };
 
   # --
@@ -242,5 +244,6 @@
     ".config/zed/settings.json".source = ./config/zed/settings.json;
     ".config/shell/functions.sh".source = ./config/shell/functions.sh;
     ".claude/CLAUDE.md".source = ./config/claude/CLAUDE.md;
+    ".claude/settings.json".source = ./config/claude/settings.json;
   };
 }
