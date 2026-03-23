@@ -218,11 +218,46 @@
     /usr/bin/osascript -e 'tell application "Finder" to set desktop picture to POSIX file "/System/Library/Desktop Pictures/Solid Colors/Blue Violet.png"'
   '';
 
+  home.activation.setupClaudePlugins = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    PLUGINS="$HOME/.claude/plugins"
+    MARKET="$PLUGINS/marketplaces/obsidian-skills"
+
+    mkdir -p "$PLUGINS/marketplaces" "$PLUGINS/cache"
+
+    if [ -d "$MARKET/.git" ]; then
+      ${pkgs.git}/bin/git -C "$MARKET" pull --quiet 2>/dev/null || true
+    else
+      ${pkgs.git}/bin/git clone --quiet https://github.com/kepano/obsidian-skills.git "$MARKET" 2>/dev/null || true
+    fi
+
+    if [ -d "$MARKET/.claude-plugin" ]; then
+      VERSION=$(${pkgs.jq}/bin/jq -r '.plugins[0].version' "$MARKET/.claude-plugin/marketplace.json")
+      SHA=$(${pkgs.git}/bin/git -C "$MARKET" rev-parse HEAD)
+      CACHE="$PLUGINS/cache/obsidian-skills/obsidian/$VERSION"
+
+      rm -rf "$CACHE"
+      mkdir -p "$CACHE"
+      (cd "$MARKET" && ${pkgs.git}/bin/git archive HEAD | tar -x -C "$CACHE")
+
+      [ -f "$PLUGINS/known_marketplaces.json" ] || echo '{}' > "$PLUGINS/known_marketplaces.json"
+      ${pkgs.jq}/bin/jq --arg loc "$MARKET" \
+        '."obsidian-skills" = {source: {source: "github", repo: "kepano/obsidian-skills"}, installLocation: $loc, lastUpdated: (now | todate)}' \
+        "$PLUGINS/known_marketplaces.json" > "$PLUGINS/known_marketplaces.json.tmp" \
+        && mv "$PLUGINS/known_marketplaces.json.tmp" "$PLUGINS/known_marketplaces.json"
+
+      [ -f "$PLUGINS/installed_plugins.json" ] || echo '{"version":2,"plugins":{}}' > "$PLUGINS/installed_plugins.json"
+      ${pkgs.jq}/bin/jq --arg path "$CACHE" --arg ver "$VERSION" --arg sha "$SHA" \
+        '.plugins."obsidian@obsidian-skills" = [{scope: "user", installPath: $path, version: $ver, installedAt: (now | todate), lastUpdated: (now | todate), gitCommitSha: $sha}]' \
+        "$PLUGINS/installed_plugins.json" > "$PLUGINS/installed_plugins.json.tmp" \
+        && mv "$PLUGINS/installed_plugins.json.tmp" "$PLUGINS/installed_plugins.json"
+    fi
+  '';
+
   home.activation.setupObsidian = lib.hm.dag.entryAfter ["writeBoundary"] ''
     DOTFILES="$HOME/dotfiles"
     VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes"
 
-    for item in .obsidian Templates Categories Code publish.css; do
+    for item in .obsidian Templates Categories Code; do
       if [ -d "$VAULT" ] && [ ! -L "$VAULT/$item" ]; then
         $DRY_RUN_CMD rm -rf "$VAULT/$item"
         $DRY_RUN_CMD ln -s "$DOTFILES/config/obsidian/$item" "$VAULT/$item"

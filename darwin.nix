@@ -19,6 +19,7 @@
     casks = [
       "1password"
       "1password-cli"
+      "caffeine"
       "claude"
       "discord"
       "dropbox"
