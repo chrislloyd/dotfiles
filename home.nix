@@ -237,7 +237,7 @@
 
       rm -rf "$CACHE"
       mkdir -p "$CACHE"
-      (cd "$MARKET" && ${pkgs.git}/bin/git archive HEAD | tar -x -C "$CACHE")
+      (cd "$MARKET" && ${pkgs.git}/bin/git archive HEAD | ${pkgs.gnutar}/bin/tar -x -C "$CACHE")
 
       [ -f "$PLUGINS/known_marketplaces.json" ] || echo '{}' > "$PLUGINS/known_marketplaces.json"
       ${pkgs.jq}/bin/jq --arg loc "$MARKET" \
