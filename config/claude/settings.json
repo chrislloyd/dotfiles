@@ -7,7 +7,7 @@
       "ExitPlanMode"
     ]
   },
-  "enabledPlugins": [
-    "obsidian@obsidian-skills"
-  ]
+  "enabledPlugins": {
+    "obsidian@obsidian-skills": true
+  }
 }
