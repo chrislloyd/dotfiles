@@ -6,5 +6,8 @@
       "EnterPlanMode",
       "ExitPlanMode"
     ]
-  }
+  },
+  "enabledPlugins": [
+    "obsidian@obsidian-skills"
+  ]
 }
