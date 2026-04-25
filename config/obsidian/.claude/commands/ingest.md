@@ -1,0 +1,18 @@
+Process the next unprocessed item(s) from `📥 Inbox.md`.
+
+For each item (URL, link, or note):
+
+1. Read the source. For URLs, fetch the page and extract the content.
+2. Search the vault for existing notes on the same topic or related concepts.
+3. Either update an existing note or create a new one:
+   - Summarize the key insight in my voice — direct, opinionated, concise
+   - Add source URL so I can find the original
+   - Add `[[wikilinks]]` connecting to existing vault notes
+   - Add related concept links at the bottom if relevant
+4. Remove the processed item from `📥 Inbox.md`.
+
+If running interactively, process items one at a time — show what you did and ask if I want to continue with the next one.
+
+If running headlessly (i.e. $ARGUMENTS contains "all"), process all items without stopping.
+
+For bare URLs: fetch the content, figure out what it's about, and file it like anything else. Everything has a topic — find it.

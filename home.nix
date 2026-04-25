@@ -257,7 +257,7 @@
     DOTFILES="$HOME/dotfiles"
     VAULT="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes"
 
-    for item in .obsidian Templates Categories Code; do
+    for item in .obsidian .claude Templates Categories Code CLAUDE.md "📥 Inbox.md"; do
       if [ -d "$VAULT" ] && [ ! -L "$VAULT/$item" ]; then
         $DRY_RUN_CMD rm -rf "$VAULT/$item"
         $DRY_RUN_CMD ln -s "$DOTFILES/config/obsidian/$item" "$VAULT/$item"

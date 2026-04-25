@@ -108,6 +108,17 @@
     };
   };
 
+  launchd.user.agents.ingest-notes = {
+    command = "/Users/${username}/.local/bin/ingest-notes";
+    serviceConfig = {
+      WatchPaths = [
+        "/Users/${username}/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/📥 Inbox.md"
+      ];
+      StandardOutPath = "/tmp/ingest-notes.log";
+      StandardErrorPath = "/tmp/ingest-notes.err";
+    };
+  };
+
   # Used for backwards compatibility
   system.stateVersion = 5;
 }

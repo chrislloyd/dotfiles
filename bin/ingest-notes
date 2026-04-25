@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+readonly vault="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes"
+readonly inbox="$vault/📥 Inbox.md"
+
+# Nothing to do if inbox is empty or missing
+if [ ! -s "$inbox" ]; then
+  echo "Inbox is empty, nothing to ingest."
+  exit 0
+fi
+
+cd "$vault"
+claude --dangerously-skip-permissions "/ingest all"
