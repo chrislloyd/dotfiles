@@ -4,6 +4,7 @@ set -euo pipefail
 export PATH="/etc/profiles/per-user/$USER/bin:/opt/homebrew/bin:$PATH"
 
 readonly vault="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes"
+readonly journal="$vault/Journal"
 readonly canvas="$vault/§ Journal.canvas"
 readonly lockfile="/tmp/journal-canvas.lock"
 
@@ -13,60 +14,62 @@ if ! mkdir "$lockfile" 2>/dev/null; then
 fi
 trap 'rmdir "$lockfile"' EXIT
 
-uv run --with pyjsoncanvas python3 - "$vault" > "$canvas" << 'PYTHON'
-import os, re, sys
-from datetime import datetime
-from collections import defaultdict
-from pyjsoncanvas import Canvas, TextNode, FileNode, Color
+GRID=40
+WIDTH=$((9 * GRID))
+HEIGHT=$((12 * GRID))
+GAP=$((1 * GRID))
+ROW_HEIGHT=$((HEIGHT + GAP))
+COL_WIDTH=$((WIDTH + GAP))
 
-vault = sys.argv[1]
-journal_dir = os.path.join(vault, "Journal")
+nodes="[]"
+row=0
 
-date_re = re.compile(r"^(\d{4}-\d{2}-\d{2})")
-entries = {}
-for f in os.listdir(journal_dir):
-    if not f.endswith(".md"):
-        continue
-    m = date_re.match(f)
-    if not m:
-        continue
-    try:
-        d = datetime.strptime(m.group(1), "%Y-%m-%d").date()
-        entries[d] = f
-    except ValueError:
-        continue
+# Group journal entries by ISO week
+ls "$journal" | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}' | grep '\.md$' | sort | while read -r file; do
+  date_str="${file:0:10}"
+  echo "$date_str $file"
+done | awk '{
+  cmd = "date -j -f %Y-%m-%d " $1 " +%G-%V 2>/dev/null"
+  cmd | getline week
+  close(cmd)
+  print week, $0
+}' | sort -k1,1 | awk -v w="$WIDTH" -v h="$HEIGHT" -v rh="$ROW_HEIGHT" -v cw="$COL_WIDTH" '
+BEGIN {
+  printf "{\"nodes\":["
+  first = 1
+  prev_week = ""
+  row = -1
+  col = 0
+  n = 0
+}
+{
+  week = $1
+  file = $3
+  for (i = 4; i <= NF; i++) file = file " " $i
 
-grouped = defaultdict(list)
-for d in entries:
-    year, week, _ = d.isocalendar()
-    grouped[(year, week)].append(d)
+  if (week != prev_week) {
+    row++
+    col = 0
+    if (!first) printf ","
+    first = 0
+    # Week header node
+    split(week, parts, "-")
+    year = parts[1]
+    wnum = parts[2]
+    id = sprintf("%016x", n++)
+    printf "{\"id\":\"%s\",\"x\":0,\"y\":%d,\"width\":%d,\"height\":%d,\"type\":\"text\",\"text\":\"# %s W%s\",\"color\":\"5\"}", id, row * rh, w, h, year, wnum
+    prev_week = week
+  }
 
-canvas = Canvas(nodes=[], edges=[])
-
-GRID = 40
-WIDTH = 9 * GRID
-HEIGHT = 12 * GRID
-GAP = 1 * GRID
-
-for y, ((year, week), days) in enumerate(sorted(grouped.items())):
-    canvas.add_node(TextNode(
-        x=0,
-        y=y * (HEIGHT + GAP),
-        width=WIDTH,
-        height=HEIGHT,
-        text=f"# {year} W{week}",
-        color=Color("5"),
-    ))
-    for i, day in enumerate(sorted(days)):
-        canvas.add_node(FileNode(
-            x=(i + 1) * (WIDTH + GAP),
-            y=y * (HEIGHT + GAP),
-            width=WIDTH,
-            height=HEIGHT,
-            file=os.path.join("Journal", entries[day]),
-        ))
-
-print(canvas.to_json())
-PYTHON
+  col++
+  printf ","
+  id = sprintf("%016x", n++)
+  # Escape the file path for JSON
+  gsub(/"/, "\\\"", file)
+  printf "{\"id\":\"%s\",\"x\":%d,\"y\":%d,\"width\":%d,\"height\":%d,\"type\":\"file\",\"file\":\"Journal/%s\"}", id, col * cw, row * rh, w, h, file
+}
+END {
+  printf "],\"edges\":[]}"
+}' > "$canvas"
 
 echo "Canvas regenerated at $(date)"

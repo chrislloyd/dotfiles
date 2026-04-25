@@ -21,7 +21,6 @@
     ripgrep
     shellcheck
     tree
-    uv
     wget
   ];
 
