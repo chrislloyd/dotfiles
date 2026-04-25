@@ -1,10 +1,17 @@
 Process the next unprocessed item(s) from `📥 Inbox.md`.
 
+Use the Obsidian CLI (`obsidian` command) to read and write notes in the vault. Use WebFetch or the defuddle skill to read URLs.
+
 For each item (URL, link, or note):
 
 1. Read the source. For URLs, fetch the page and extract the content.
-2. Search the vault for existing notes on the same topic or related concepts.
+2. Search the vault for existing notes on the same topic or related concepts:
+   - `obsidian search query="<topic>"` to find related notes
+   - `obsidian read file="<name>"` to read a candidate note
+   - `obsidian backlinks file="<name>"` to understand connections
 3. Either update an existing note or create a new one:
+   - To update: `obsidian append file="<name>" content="<text>"`
+   - To create: `obsidian create path="<name>.md" content="<text>"`
    - Summarize the key insight in my voice — direct, opinionated, concise
    - Add source URL so I can find the original
    - Add `[[wikilinks]]` connecting to existing vault notes

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+export PATH="/etc/profiles/per-user/$USER/bin:$PATH"
+
 readonly vault="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes"
 readonly inbox="$vault/📥 Inbox.md"
 
