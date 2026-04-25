@@ -119,6 +119,17 @@
     };
   };
 
+  launchd.user.agents.journal-canvas = {
+    command = "/Users/${username}/.local/bin/journal-canvas";
+    serviceConfig = {
+      WatchPaths = [
+        "/Users/${username}/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes/Journal"
+      ];
+      StandardOutPath = "/tmp/journal-canvas.log";
+      StandardErrorPath = "/tmp/journal-canvas.err";
+    };
+  };
+
   # Used for backwards compatibility
   system.stateVersion = 5;
 }

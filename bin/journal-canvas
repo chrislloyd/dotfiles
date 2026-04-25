@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+export PATH="/etc/profiles/per-user/$USER/bin:/opt/homebrew/bin:$PATH"
+
+readonly vault="$HOME/Library/Mobile Documents/iCloud~md~obsidian/Documents/Notes"
+readonly canvas="$vault/§ Journal.canvas"
+readonly lockfile="/tmp/journal-canvas.lock"
+
+if ! mkdir "$lockfile" 2>/dev/null; then
+  echo "Already running, skipping."
+  exit 0
+fi
+trap 'rmdir "$lockfile"' EXIT
+
+uv run --with pyjsoncanvas python3 - "$vault" > "$canvas" << 'PYTHON'
+import os, re, sys
+from datetime import datetime
+from collections import defaultdict
+from pyjsoncanvas import Canvas, TextNode, FileNode, Color
+
+vault = sys.argv[1]
+journal_dir = os.path.join(vault, "Journal")
+
+date_re = re.compile(r"^(\d{4}-\d{2}-\d{2})")
+entries = {}
+for f in os.listdir(journal_dir):
+    if not f.endswith(".md"):
+        continue
+    m = date_re.match(f)
+    if not m:
+        continue
+    try:
+        d = datetime.strptime(m.group(1), "%Y-%m-%d").date()
+        entries[d] = f
+    except ValueError:
+        continue
+
+grouped = defaultdict(list)
+for d in entries:
+    year, week, _ = d.isocalendar()
+    grouped[(year, week)].append(d)
+
+canvas = Canvas(nodes=[], edges=[])
+
+GRID = 40
+WIDTH = 9 * GRID
+HEIGHT = 12 * GRID
+GAP = 1 * GRID
+
+for y, ((year, week), days) in enumerate(sorted(grouped.items())):
+    canvas.add_node(TextNode(
+        x=0,
+        y=y * (HEIGHT + GAP),
+        width=WIDTH,
+        height=HEIGHT,
+        text=f"# {year} W{week}",
+        color=Color("5"),
+    ))
+    for i, day in enumerate(sorted(days)):
+        canvas.add_node(FileNode(
+            x=(i + 1) * (WIDTH + GAP),
+            y=y * (HEIGHT + GAP),
+            width=WIDTH,
+            height=HEIGHT,
+            file=os.path.join("Journal", entries[day]),
+        ))
+
+print(canvas.to_json())
+PYTHON
+
+echo "Canvas regenerated at $(date)"
