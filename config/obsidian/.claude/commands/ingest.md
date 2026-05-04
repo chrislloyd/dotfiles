@@ -29,6 +29,9 @@ For bare URLs: fetch the content, figure out what it's about, and file it like a
 Notes are easier to scan when they have visuals. When ingesting:
 
 - If the source has a key diagram, screenshot, or photo — download it to `Attachments/` and embed with `![[Attachments/filename.ext]]`
-- For YouTube URLs, embed directly with `![title](https://www.youtube.com/watch?v=ID)`
+- For YouTube URLs:
+  1. Embed the video with `![title](https://www.youtube.com/watch?v=ID)`
+  2. Pull the transcript for summarizing: `yt-dlp --skip-download --write-subs --write-auto-subs --sub-lang en --sub-format vtt -o /tmp/ytsub "URL"` then read `/tmp/ytsub.en.vtt`
+  3. Use the transcript as the source content — summarize the key points just like any other source
 - For other videos, embed the URL so Obsidian can preview it
 - Prefer images that explain the concept (diagrams, architecture drawings, UI screenshots) over decorative ones

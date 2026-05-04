@@ -22,6 +22,7 @@
     shellcheck
     tree
     wget
+    yt-dlp
   ];
 
   # --
