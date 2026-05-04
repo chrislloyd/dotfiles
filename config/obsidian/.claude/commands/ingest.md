@@ -23,3 +23,12 @@ If running interactively, process items one at a time — show what you did and 
 If running headlessly (i.e. $ARGUMENTS contains "all"), process all items without stopping.
 
 For bare URLs: fetch the content, figure out what it's about, and file it like anything else. Everything has a topic — find it.
+
+## Media
+
+Notes are easier to scan when they have visuals. When ingesting:
+
+- If the source has a key diagram, screenshot, or photo — download it to `Attachments/` and embed with `![[Attachments/filename.ext]]`
+- For YouTube URLs, embed directly with `![title](https://www.youtube.com/watch?v=ID)`
+- For other videos, embed the URL so Obsidian can preview it
+- Prefer images that explain the concept (diagrams, architecture drawings, UI screenshots) over decorative ones
