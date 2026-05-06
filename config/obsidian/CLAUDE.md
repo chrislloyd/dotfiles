@@ -51,9 +51,28 @@ connections. Link to stubs that don't exist yet; they'll get written later.
 ### Voice and formatting
 
 - Direct, opinionated, concise. Summarize ideas in your own words, don't just quote
+- No root H1 headings -- the filename is the title
 - Use `[[wikilinks]]` to connect related concepts
 - End notes with a line of related `[[concept]]` links when relevant
 - Frontmatter is optional. Use it for `publish`, `category`, `source`, `author` when relevant
+
+### Diagrams
+
+Use Mermaid for diagrams (Obsidian renders it natively). Prefer it over ASCII art when
+showing flows, state machines, sequences, or graphs. Reach for ASCII only for things
+Mermaid can't easily express -- e.g. memory layouts or packet byte formats.
+
+### Code examples
+
+Default to **TypeScript with Bun** for code samples -- types make the data flow legible
+and Bun gives you a single runtime with built-in TCP/HTTP/FFI/file APIs.
+
+Use **Rust** when the topic is genuinely low-level: machine code emission, raw memory
+layouts, syscalls, signals, FFI-heavy systems work. Rust's types and ownership make
+manual memory management readable in a way C doesn't.
+
+Use whatever the topic *demands* when neither fits -- e.g. assembly for a bootloader.
+Don't force a language onto a topic it doesn't belong in.
 
 ## Ingest workflow
 
