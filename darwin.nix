@@ -87,6 +87,45 @@
       TrackpadRightClick = true;
       TrackpadThreeFingerDrag = true;
     };
+
+    menuExtraClock = {
+      ShowAMPM = true;
+      ShowDayOfWeek = true;
+      ShowDate = 0;  # 0 = never, 1 = always, 2 = when space allows
+    };
+
+    CustomUserPreferences = {
+      "com.apple.Safari" = {
+        IncludeInternalDebugMenu = 1;
+        IncludeDevelopMenu = 1;
+        WebKitDeveloperExtrasEnabledPreferenceKey = 1;
+        "WebKitPreferences.developerExtrasEnabled" = 1;
+        ShowFullURLInSmartSearchField = 1;
+        ShowOverlayStatusBar = 0;
+        "ShowFavoritesBar-v2" = 0;
+        AutoFillCreditCardData = 0;
+        AutoFillFromAddressBook = 0;
+        AutoFillFromiCloudKeychain = 0;
+        AutoFillMiscellaneousForms = 0;
+      };
+
+      "com.apple.finder" = {
+        FXPreferredViewStyle = "clmv";  # column view
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowHardDrivesOnDesktop = true;
+        ShowRemovableMediaOnDesktop = true;
+      };
+
+      # Hot corners. Codes: 4=desktop, 5=screen saver start, 14=quick note
+      "com.apple.dock" = {
+        "wvous-tr-corner" = 4;
+        "wvous-tr-modifier" = 0;
+        "wvous-bl-corner" = 5;
+        "wvous-bl-modifier" = 0;
+        "wvous-br-corner" = 14;
+        "wvous-br-modifier" = 0;
+      };
+    };
   };
 
   # Primary user for system defaults and homebrew
@@ -98,6 +137,9 @@
 
   # Create /etc/zshrc that loads nix-darwin env
   programs.zsh.enable = true;
+
+  # TouchID for sudo — makes `rebuild` painless, also survives system updates
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # LaunchAgents
   launchd.user.agents.sweep-screenshots = {
@@ -117,6 +159,22 @@
       ];
       StandardOutPath = "/tmp/ingest-notes.log";
       StandardErrorPath = "/tmp/ingest-notes.err";
+    };
+  };
+
+  # Auto-rebuild when dotfiles change. Runs as root via launchd daemon so no sudo prompt.
+  launchd.daemons.dotfiles-autorebuild = {
+    command = "/run/current-system/sw/bin/darwin-rebuild switch --flake /Users/${username}/dotfiles#$(hostname -s)";
+    serviceConfig = {
+      WatchPaths = [
+        "/Users/${username}/dotfiles/flake.nix"
+        "/Users/${username}/dotfiles/flake.lock"
+        "/Users/${username}/dotfiles/darwin.nix"
+        "/Users/${username}/dotfiles/home.nix"
+      ];
+      ThrottleInterval = 30;
+      StandardOutPath = "/tmp/dotfiles-autorebuild.log";
+      StandardErrorPath = "/tmp/dotfiles-autorebuild.err";
     };
   };
 
