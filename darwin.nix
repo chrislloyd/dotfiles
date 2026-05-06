@@ -24,6 +24,7 @@
       "discord"
       "dropbox"
       "ghostty"
+      "godot"
       "netnewswire"
       "obsidian"
       "zed"
